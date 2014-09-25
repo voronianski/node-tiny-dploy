@@ -80,11 +80,11 @@ You're free to make changes inside in order to update necessary application. The
 
 ## To Do
 
-<input type="checkbox"> Support for [gulp](http://gulpjs.com)
+- [ ] Support for [gulp](http://gulpjs.com)
 
-<input type="checkbox"> Command `dploy remove [app]` for removing apps from config and all necessary data
+- [ ] Command `dploy remove [app]` for removing apps from config and all necessary data
 
-<input type="checkbox"> Command for editing app options `dploy set [app] branch:production`
+- [ ] Command for editing app options `dploy set [app] branch:production`
 
 ## Projects
 
