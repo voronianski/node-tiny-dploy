@@ -4,8 +4,7 @@ var fs = require('fs');
 var homedir = require('userhome');
 
 if (fs.existsSync(homedir('.dploy_config.json'))) {
-	var config = fs.readFileSync(homedir('.dploy_config.json'), {encoding: 'utf-8'});
-	console.log(config);
+	var config = require(homedir('.dploy_config.json'));
 } else {
 	echo('Error: Please create `.dploy_config.json` file in HOME_DIR');
 	exit(1);
