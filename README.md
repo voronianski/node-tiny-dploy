@@ -1,6 +1,6 @@
 # node-tiny-deploy
 
-> Simple shell script + PM2 deployer
+> Simple shell script + PM2 node.js deployer
 
 This CLI will be helpful if you host the server with multiple applications and use `bash` scripts in order to redeploy them. Instead of supporting multiple files:
 
@@ -62,7 +62,7 @@ Stops running `pm2` app and performs the same actions as `dploy reload` then.
 
 ## Requirements
 
-You need these tools to be installed on your machine in order to work with _tiny-dploy_:
+You need these tools to be installed on your machine in order to work with `dploy`:
 
 - [git](http://git-scm.com/downloads)
 - [bower](http://bower.io)
@@ -71,7 +71,7 @@ You need these tools to be installed on your machine in order to work with _tiny
 
 ## Configuration
 
-All configuration options are stored inside `.dploy_config.json` file which is located in your systems `HOME_DIR`. For [`dploy setup` example](https://github.com/voronianski/node-tiny-dploy#dploy-setup) generated json file will as follows:
+All configuration options are stored inside `.dploy_config.json` file which is located in your systems `HOME_DIR`. For [`dploy setup` example](https://github.com/voronianski/node-tiny-dploy#dploy-setup) generated json file will be as follows:
 
 ```json
 {
