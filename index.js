@@ -109,7 +109,7 @@ exports.create = function (cfg) {
 	delete config[name].name;
 	str = JSON.stringify(config, null, 2);
 
-	fs.appendFile(homedir('.dploy_config.json'), str, function (err) {
+	fs.writeFile(homedir('.dploy_config.json'), str, function (err) {
 		if (err) {
 			echo(err);
 			exit(1);
