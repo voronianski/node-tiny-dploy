@@ -77,7 +77,7 @@ exports.restart = function (name) {
 
 	var cmd = [
 		'pm2 start /var/www/'+folder,
-		'-f --name ',
+		'-f --name',
 		proc
 	];
 	if (instance.env) {
