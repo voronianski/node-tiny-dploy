@@ -91,11 +91,11 @@ You're free to make changes inside in order to update necessary application. The
 
 ## To Do
 
-- [ ] Support for [gulp](http://gulpjs.com)
+- [ ] Support for [gulp](http://gulpjs.com).
 
-- [ ] Command `dploy remove [app]` for removing apps from config and all necessary data
+- [ ] Command `dploy remove [app]` for removing apps from config and all necessary data.
 
-- [ ] Command for editing app options `dploy set [app] branch:production`
+- [ ] Command for editing app options `dploy set [app] branch:production`.
 
 ## Projects
 
@@ -106,19 +106,6 @@ List of the projects using this small and helpful hack :sunglasses: :
 [<img src="https://dl.dropboxusercontent.com/u/100463011/mirrorfootball.jpg" width="300">](http://m.mirrorfootball.com)
 
 ## License
-
-```
-WWWWWW||WWWWWW
- W W W||W W W
-      ||
-    ( OO )__________
-     /  |           \
-    /o o|    MIT     \
-    \___/||_||__||_|| *
-         || ||  || ||
-        _||_|| _||_||
-       (__|__|(__|__|
-```
 
 MIT Licensed
 
