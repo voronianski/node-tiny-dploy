@@ -1,6 +1,15 @@
 require('shelljs/global');
 
-var config = require('./config');
+var fs = require('fs');
+var homedir = require('userhome');
+
+if (fs.existsSync(homedir('.dploy_config.json'))) {
+	var config = fs.readFileSync(homedir('.dploy_config.json'), {encoding: 'utf-8'});
+	console.log(config);
+} else {
+	echo('Error: Please create `.dploy_config.json` file in HOME_DIR');
+	exit(1);
+}
 
 exports.reload = function (name) {
 	var instance = config[name];

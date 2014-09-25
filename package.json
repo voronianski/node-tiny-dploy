@@ -1,9 +1,15 @@
 {
   "name": "tiny-dploy",
-  "version": "0.0.1-rc",
+  "version": "0.0.2-rc",
   "description": "Simple shell script + PM2 deployer",
   "main": "index.js",
-  "keywords": ["PM2", "shell", "bash", "www", "deploy"],
+  "keywords": [
+    "PM2",
+    "shell",
+    "bash",
+    "www",
+    "deploy"
+  ],
   "bin": {
     "dploy": "./bin/deployer"
   },
@@ -15,6 +21,8 @@
   "license": "BSD",
   "dependencies": {
     "commander": "^2.3.0",
-    "shelljs": "^0.3.0"
+    "pkginfo": "^0.3.0",
+    "shelljs": "^0.3.0",
+    "userhome": "^1.0.0"
   }
 }
