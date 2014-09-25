@@ -76,11 +76,7 @@ exports.restart = function (name) {
 	var proc = instance.pm2 || folder || name;
 
 	echo('-----> pm2 stop '+proc);
-	var pm2stop = exec('pm2 stop '+proc);
-	if (pm2stop.code !== 0) {
-		echo('Error: PM2 stop failed');
-		exit(1);
-	}
+	exec('pm2 stop '+proc);
 
 	echo('-----> cd /var/www/'+folder);
 	cd('/var/www/'+folder);
