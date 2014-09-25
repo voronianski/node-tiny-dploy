@@ -28,6 +28,13 @@ function _sync () {
 		exit(1);
 	}
 
+	echo('-----> bower install');
+	var bower = exec('bower install');
+	if (bower.code !== 0) {
+		echo('Error: Bower install failed');
+		exit(1);
+	}
+
 	echo('-----> grunt build');
 	var grunt = exec('grunt build');
 	if (grunt.code !== 0) {
@@ -159,5 +166,9 @@ exports.create = function (cfg) {
 };
 
 exports.remove = function (name) {
+
+};
+
+exports.list = function () {
 
 };
