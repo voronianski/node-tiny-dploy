@@ -121,7 +121,14 @@ exports.create = function (cfg) {
 		cd('/var/www');
 
 		echo('-----> Clone git repo into folder with name "'+folder+'"');
-		exec('sudo git clone '+instance.git+' --branch '+instance.branch+' '+folder);
+		var gitStr = 'git clone '+instance.git+' --branch '+instance.branch+' '+folder;
+		echo('-----> '+gitStr);
+		var git = exec(gitStr);
+		if (git.code !== 0) {
+			echo('Error: Git clone failed');
+			exit(1);
+		}
+
 		exec('sudo chown -R $USER '+folder);
 		exec('sudo mkdir '+folder);
 
@@ -148,4 +155,8 @@ exports.create = function (cfg) {
 			exit(1);
 		}
 	});
+};
+
+exports.remove = function (name) {
+
 };
