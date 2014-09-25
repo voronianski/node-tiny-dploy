@@ -2,9 +2,12 @@
   "instance": {
     // required
     "git": "",
+    "node": "app.js",
 
     // optional
-    "folder": "<looks up in /var/www/ folder>",
-    "pm2": "<name of PM2 process>"
+    "port": 8080,
+    "node_env": "development",
+    "pm2": "test-app",
+    "folder": "test-app-dir"
   }
 }
