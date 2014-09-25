@@ -97,6 +97,10 @@ You're free to make changes inside in order to update necessary application. The
 
 - [ ] Command for editing app options `dploy set [app] branch:production`.
 
+- [ ] Prettify outputs with colors.
+
+- [ ] Add ascii table for list.
+
 ## Projects
 
 List of the projects using this small and helpful hack :sunglasses: :

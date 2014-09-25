@@ -123,6 +123,7 @@ exports.create = function (cfg) {
 
 		var instance = config[name];
 		var folder = instance.folder || name;
+		var proc = instance.pm2 || folder || name;
 
 		cd('/var/www');
 
