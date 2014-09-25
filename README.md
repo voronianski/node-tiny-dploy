@@ -28,6 +28,7 @@ NODE_ENV (development): staging
 NODE_PORT (80): 8081
 
 -----> Clone git repo into folder with name "test-app"
+...
 ```
 
 ### ``dploy list``
