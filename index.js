@@ -130,7 +130,8 @@ exports.create = function (cfg) {
 		}
 
 		exec('sudo chown -R $USER '+folder);
-		exec('sudo mkdir '+folder);
+
+		cd('/var/www'+folder);
 
 		_sync(name);
 
