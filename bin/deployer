@@ -3,20 +3,50 @@
 var cli = require('commander');
 var deployer = require('../');
 
-cli.version('0.0.1');
+cli.version(deployer.version);
 
 cli
 	.command('reload')
-	.description('Reload instance silently without stopping')
+	.description('Reload instance silently without shooting off')
 	.action(function (instance) {
 		return deployer.reload(instance);
 	});
 
 cli
 	.command('restart')
-	.description('Force stopping/restarting an instance')
+	.description('Force pm2 stopping/restarting an instance')
 	.action(function (instance) {
 		return deployer.restart(instance);
+	});
+
+cli
+	.command('setup')
+	.description('Setup new instance and start it with pm2')
+	.action(function () {
+		cli.prompt({
+			name: 'name: ',
+			git: 'git url: ',
+			branch: 'git branch (master): ',
+			node: 'node (app.js): ',
+			folder: 'folder in /var/www/ : ',
+			pm2: 'pm2 process: ',
+			node_env: 'NODE_ENV (development): ',
+			port: 'NODE_PORT (80): ',
+		}, function (cfg) {
+			if (!cfg.name) {
+				console.error('Error: Instance name is required');
+				return process.exit(1);
+			}
+			if (!cfg.git) {
+				console.error('Error: git repository url is required');
+				return process.exit(1);
+			}
+
+			cfg.node = cfg.node || 'app.js';
+			cfg.branch = cfg.branch || 'master';
+
+			return deployer.create(cfg);
+		});
 	});
 
 cli.parse(process.argv);

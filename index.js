@@ -1,5 +1,7 @@
 require('shelljs/global');
 
+var pkginfo = require('pkginfo')(module, 'version');
+
 var fs = require('fs');
 var homedir = require('userhome');
 
@@ -7,6 +9,7 @@ if (fs.existsSync(homedir('.dploy_config.json'))) {
 	var config = require(homedir('.dploy_config.json'));
 } else {
 	echo('Error: Please create `.dploy_config.json` file in HOME_DIR');
+	echo('Error: Or run `dploy setup` to create first instance');
 	exit(1);
 }
 
@@ -97,4 +100,52 @@ exports.restart = function (name) {
 		echo('Error: PM2 start failed');
 		exit(1);
 	}
+};
+
+exports.create = function (cfg) {
+	var name = cfg.name;
+
+	config[name] = cfg;
+	delete config[name].name;
+	str = JSON.stringify(config, null, 2);
+
+	fs.appendFile(homedir('.dploy_config.json'), str, function (err) {
+		if (err) {
+			echo(err);
+			exit(1);
+		}
+
+		var instance = config[name];
+		var folder = instance.folder || name;
+
+		cd('/var/www');
+
+		echo('-----> Clone git repo into folder with name "'+folder+'"');
+		exec('sudo git clone '+instance.git+' --branch '+instance.branch+' '+folder);
+		exec('sudo chown -R $USER '+folder);
+		exec('sudo mkdir '+folder);
+
+		_sync(name);
+
+		var cmd = [
+			'pm2 start /var/www/'+folder+'/'+instance.node,
+			'--name',
+			proc,
+			'-f'
+		];
+		if (instance.env) {
+			cmd.unshift('NODE_ENV='+instance.env);
+		}
+		if (instance.port) {
+			cmd.unshift('NODE_PORT='+instance.port);
+		}
+
+		var cmdstr = cmd.join(' ');
+		echo('-----> ' + cmdstr);
+		var pm2 = exec(cmdstr);
+		if (pm2.code !== 0) {
+			echo('Error: PM2 start failed');
+			exit(1);
+		}
+	});
 };
