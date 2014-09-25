@@ -1,10 +1,7 @@
 {
   "instance": {
-    // required
-    "git": "",
+    "git": "git@github.com:voronianski/node-tiny-dploy.git",
     "node": "app.js",
-
-    // optional
     "port": 8080,
     "node_env": "development",
     "pm2": "test-app",
