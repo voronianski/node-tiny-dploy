@@ -2,6 +2,8 @@
 
 > Simple shell script + PM2 deployer
 
+If you have 
+
 ## Install
 
 ```bash
@@ -12,18 +14,16 @@ npm install tiny-dploy --save
 
 ### ``dploy setup``
 
-Creates new application instance. 
-
-It will automatically clone repository into `/var/www`, install dependencies, build application with `grunt build` and start application with `pm2`. Command will prompt you with available configuration options.
+Creates new application instance. It will automatically clone repository into `/var/www`, install `npm` and `bower` dependencies, build application with `grunt build` and start application with `pm2`. Command will prompt you with available configuration options.
 
 ```bash
 user@server:~$ dploy setup
-name: test-app
+name: staging
 git url: git@bitbucket.org:user/test-app.git
-git branch (master): rc_0
-node (app.js): app.coffee
-folder in /var/www/ : test-app-dir # will look at name if not specified
-pm2 process: test-app # will look at folder or name if not specified
+git branch (master): rc_0 # defaults to `master`
+node (app.js): app.coffee # defaults to `app.js`
+folder in /var/www/ : test-app-dir # will look at `name` if not specified
+pm2 process: test-app # will look at folder or `name` if not specified
 NODE_ENV (development): staging
 NODE_PORT (80): 8081
 
@@ -33,13 +33,21 @@ NODE_PORT (80): 8081
 
 ### ``dploy list``
 
-List instances created with `dploy setup`.
+Lists instances created with `dploy setup`.
 
-### ``dploy reload``
+```bash
+user@server:~$ dploy list
+staging
+production
+```
 
-### ``dploy restart``
+### ``dploy reload [app]``
 
-## Example
+Reloads application instance without stopping it. Command fetches latest changes on specified `branch`, installs missed dependencies, builds it and restarts app silently with `pm2`.
+
+### ``dploy restart [app]``
+
+Stops running `pm2` app and performs the same actions as `dploy reload` then.
 
 ## Requirements
 
@@ -47,14 +55,66 @@ You need these tools to be installed on your machine in order to work with _tiny
 
 - [git](http://git-scm.com/downloads)
 - [bower](http://bower.io)
-- [grunt](http://gruntjs.com/)
+- [grunt](http://gruntjs.com)
 - [PM2](https://github.com/Unitech/pm2)
+
+## Configuration
+
+All configuration options are stored inside `.dploy_config.json` file which is located in your systems `HOME_DIR`. For [`dploy setup` example](https://github.com/voronianski/node-tiny-dploy#dploy-setup) generated json file will as follows:
+
+```json
+{
+  "staging": {
+      "git": "git@bitbucket.org:user/test-app.git",
+      "branch": "rc_0",
+      "node": "app.coffee",
+      "folder": "test-app-dir",
+      "pm2": "test-app",
+      "node_env": "staging",
+      "port": "8081"
+   }
+}
+```
+
+You're free to make changes inside in order to update necessary application. There should be added special commands for that in the future.
+
+## To Do
+
+<input type="checkbox"> Support for [gulp](http://gulpjs.com)
+
+<input type="checkbox"> Command `dploy remove [app]` for removing apps from config and all necessary data
+
+<input type="checkbox"> Command for editing app options `dploy set [app] branch:production`
 
 ## Projects
 
 List of the projects using this small and helpful hack :sunglasses: :
 
-- [Mirror Football](http://www.mirror.co.uk/sport/football) - deploys for different mobile apps
+- [Mirror Football](http://www.mirror.co.uk/sport/football) - deploys for HTML5 mobile apps.
 
-[<img src="https://dl.dropboxusercontent.com/u/100463011/mirrorfootball.jpg" width="250">](http://m.mirrorfootball.com)
+[<img src="https://dl.dropboxusercontent.com/u/100463011/mirrorfootball.jpg" width="300">](http://m.mirrorfootball.com)
 
+## License
+
+```
+WWWWWW||WWWWWW
+ W W W||W W W
+      ||
+    ( OO )__________
+     /  |           \
+    /o o|    MIT     \
+    \___/||_||__||_|| *
+         || ||  || ||
+        _||_|| _||_||
+       (__|__|(__|__|
+```
+
+MIT Licensed
+
+Copyright (c) 2014, Dmitri Voronianski [dmitri.voronianski@gmail.com](mailto:dmitri.voronianski@gmail.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE

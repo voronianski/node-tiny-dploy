@@ -161,10 +161,6 @@ exports.create = function (cfg) {
 	});
 };
 
-exports.remove = function (name) {
-
-};
-
 exports.list = function () {
 	var instances = Object.keys(config);
 	echo(instances.join('\n'));
