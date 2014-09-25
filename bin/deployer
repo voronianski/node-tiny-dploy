@@ -49,4 +49,11 @@ cli
 		});
 	});
 
+cli
+	.command('list')
+	.description('List available instances')
+	.action(function () {
+		return deployer.list();
+	});
+
 cli.parse(process.argv);
