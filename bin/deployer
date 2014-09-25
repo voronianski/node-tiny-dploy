@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+var cli = require('commander');
+var deployer = require('../');
+
+cli.version('0.0.1');
+
+cli
+	.command('reload')
+	.description('Reload instance silently without stopping')
+	.action(function (instance) {
+		return deployer.reload(instance);
+	});
+
+cli
+	.command('restart')
+	.description('Force stopping/restarting an instance')
+	.action(function (instance) {
+		return deployer.restart(instance);
+	});
+
+cli.parse(process.argv);
