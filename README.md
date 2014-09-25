@@ -2,7 +2,18 @@
 
 > Simple shell script + PM2 deployer
 
-If you have 
+This CLI will be helpful if you host the server with multiple applications and use `bash` scripts in order to redeploy them. Instead of supporting multiple files:
+
+```bash
+user@server:~$ ls -a
+app1-prod-restart.sh
+app1-staging-restart.sh
+app2-prod-restart.sh
+app2-staging-restart.sh
+...
+```
+
+Just use one configuration file and several commands with `dploy`.
 
 ## Install
 
