@@ -30,8 +30,9 @@ cli
 			node: 'node (app.js): ',
 			folder: 'folder in /var/www/ : ',
 			pm2: 'pm2 process: ',
+			opts: 'pm2 opts: ',
 			node_env: 'NODE_ENV (development): ',
-			port: 'NODE_PORT (80): ',
+			port: 'NODE_PORT (80): '
 		}, function (cfg) {
 			if (!cfg.name) {
 				console.error('Error: Instance name is required');

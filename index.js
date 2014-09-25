@@ -95,6 +95,9 @@ exports.restart = function (name) {
 	if (instance.port) {
 		cmd.unshift('NODE_PORT='+instance.port);
 	}
+	if (instance.opts) {
+		cmd.push(instance.opts);
+	}
 
 	var cmdstr = cmd.join(' ');
 	echo('-----> ' + cmdstr);
@@ -149,6 +152,9 @@ exports.create = function (cfg) {
 		}
 		if (instance.port) {
 			cmd.unshift('NODE_PORT='+instance.port);
+		}
+		if (instance.opts) {
+			cmd.push(instance.opts);
 		}
 
 		var cmdstr = cmd.join(' ');
