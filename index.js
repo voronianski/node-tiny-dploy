@@ -76,9 +76,10 @@ exports.restart = function (name) {
 	_sync(name);
 
 	var cmd = [
-		'pm2 start /var/www/'+folder,
-		'-f --name',
-		proc
+		'pm2 start /var/www/'+folder+'/'+instance.node,
+		'--name',
+		proc,
+		'-f'
 	];
 	if (instance.env) {
 		cmd.unshift('NODE_ENV='+instance.env);
