@@ -63,6 +63,8 @@ exports.reload = function (name) {
 		echo('Error: PM2 reload failed');
 		exit(1);
 	}
+	echo('-----> Success! Instance ['+name+'] was realoded via pm2');
+	exit(0);
 };
 
 exports.restart = function (name) {
@@ -106,6 +108,8 @@ exports.restart = function (name) {
 		echo('Error: PM2 start failed');
 		exit(1);
 	}
+	echo('-----> Success! Instance ['+name+'] was restarted via pm2');
+	exit(0);
 };
 
 exports.create = function (cfg) {
@@ -165,6 +169,8 @@ exports.create = function (cfg) {
 			echo('Error: PM2 start failed');
 			exit(1);
 		}
+		echo('-----> Success! Instance ['+name+'] is running via pm2');
+		exit(0);
 	});
 };
 
