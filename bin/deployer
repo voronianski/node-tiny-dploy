@@ -9,7 +9,7 @@ cli
 	.command('reload')
 	.description('Reload instance silently without shooting off')
 	.action(function (instance) {
-		if (!instance) {
+		if (typeof instance !== 'string') {
 			console.info('Usage: dploy reload [app]');
 			process.exit(0);
 		}
@@ -20,7 +20,7 @@ cli
 	.command('restart')
 	.description('Force pm2 stopping/restarting an instance')
 	.action(function (instance) {
-		if (!instance) {
+		if (typeof instance !== 'string') {
 			console.info('Usage: dploy restart [app]');
 			process.exit(0);
 		}
@@ -69,7 +69,7 @@ cli
 	.command('remove')
 	.description('Delete application folder and config entry')
 	.action(function (instance) {
-		if (!instance) {
+		if (typeof instance !== 'string') {
 			console.info('Usage: dploy remove [app]');
 			process.exit(0);
 		}
