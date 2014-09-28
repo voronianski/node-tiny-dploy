@@ -178,3 +178,34 @@ exports.list = function () {
 	var instances = Object.keys(config);
 	echo(instances.join('\n'));
 };
+
+exports.remove = function (name) {
+	var instance = config[name];
+	if (!instance) {
+		echo('Error: There is no such instance ['+name+'] in config');
+		exit(1);
+	}
+	var folder = instance.folder || name;
+	var proc = instance.pm2 || folder || name;
+
+	echo('-----> pm2 delete '+proc);
+	exec('pm2 delete '+proc);
+
+	delete config[name];
+	str = JSON.stringify(config, null, 2);
+
+	fs.writeFile(homedir('.dploy_config.json'), str, function (err) {
+		if (err) {
+			echo(err);
+			exit(1);
+		}
+
+		echo('-----> cd /var/www/');
+		cd('/var/www/');
+
+		echo('-----> rm -rf /var/www/'+folder+'/*');
+		rm('-rf', '/var/www/'+folder+'/*');
+
+		exit(0);
+	});
+};

@@ -57,4 +57,18 @@ cli
 		return deployer.list();
 	});
 
+cli
+	.command('remove')
+	.description('Delete application folder and config entry')
+	.action(function (instance) {
+		cli.prompt({
+			val: 'Are you sure you want to delete "['+instance+'"]? (y/N) '
+		}, function (obj) {
+			if (obj.val === 'y' || obj.val === 'Y') {
+				return deployer.remove(instance);
+			}
+			return process.exit(0);
+		});
+	});
+
 cli.parse(process.argv);

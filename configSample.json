@@ -5,6 +5,7 @@
     "port": 8080,
     "node_env": "development",
     "pm2": "test-app",
+    "pm2 opts": "-i 4",
     "folder": "test-app-dir"
   }
 }

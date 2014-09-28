@@ -1,4 +1,4 @@
-# node-tiny-deploy
+# node-tiny-dploy
 
 > Simple shell script + PM2 node.js deployer
 
@@ -35,6 +35,7 @@ git branch (master): rc_0 # defaults to `master`
 node (app.js): app.coffee # defaults to `app.js`
 folder in /var/www/ : test-app-dir # will look at `name` if not specified
 pm2 process: test-app # will look at folder or `name` if not specified
+pm2 opts: -i 4 # pm2 options
 NODE_ENV (development): staging
 NODE_PORT (80): 8081
 
@@ -81,6 +82,7 @@ All configuration options are stored inside `.dploy_config.json` file which is l
       "node": "app.coffee",
       "folder": "test-app-dir",
       "pm2": "test-app",
+      "pm2 opts": "-i 4",
       "node_env": "staging",
       "port": "8081"
    }
@@ -93,7 +95,7 @@ You're free to make changes inside in order to update necessary application. The
 
 - [ ] Support for [gulp](http://gulpjs.com).
 
-- [ ] Command `dploy remove [app]` for removing apps from config and all necessary data.
+- [x] Command `dploy remove [app]` for removing apps from config and all necessary data.
 
 - [ ] Command for editing app options `dploy set [app] branch:production`.
 
