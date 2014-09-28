@@ -74,7 +74,7 @@ cli
 			process.exit(0);
 		}
 		cli.prompt({
-			val: 'Are you sure you want to delete "['+instance+'"]? (y/N) '
+			val: 'Are you sure you want to delete ['+instance+']? (y/N) '
 		}, function (obj) {
 			if (obj.val === 'y' || obj.val === 'Y') {
 				return deployer.remove(instance);
