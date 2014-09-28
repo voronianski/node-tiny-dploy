@@ -61,6 +61,10 @@ Reloads application instance without stopping it. Command fetches latest changes
 
 Stops running `pm2` app and performs the same actions as `dploy reload` then.
 
+### ``dploy remove [app]``
+
+Stops running `pm2` instance if it runs and deletes application folder from `/var/www/` as well as config entry.
+
 ## Requirements
 
 You need these tools to be installed on your machine in order to work with `dploy`:
