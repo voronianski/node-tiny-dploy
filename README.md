@@ -1,5 +1,7 @@
 # node-tiny-dploy
 
+[![NPM](https://nodei.co/npm/tiny-dploy.png?downloads=true&downloadRank=true)](https://nodei.co/npm/tiny-dploy/)
+
 > Simple shell script + PM2 node.js deployer
 
 This CLI will be helpful if you host the server with multiple applications and use `bash` scripts in order to redeploy them. Instead of supporting multiple files:
