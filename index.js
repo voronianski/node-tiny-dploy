@@ -209,3 +209,11 @@ exports.remove = function (name) {
 		exit(0);
 	});
 };
+
+exports.set = function (name, prop, value) {
+	var instance = config[name];
+	if (!instance) {
+		echo('Error: There is no such instance ['+name+'] in config');
+		exit(1);
+	}
+};

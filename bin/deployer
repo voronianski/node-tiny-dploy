@@ -8,6 +8,7 @@ cli.version(deployer.version);
 cli
 	.command('reload')
 	.description('Reload instance silently without shooting off')
+	.usage('[app]')
 	.action(function (instance) {
 		if (typeof instance !== 'string') {
 			console.info('Usage: dploy reload [app]');
@@ -19,6 +20,7 @@ cli
 cli
 	.command('restart')
 	.description('Force pm2 stopping/restarting an instance')
+	.usage('[app]')
 	.action(function (instance) {
 		if (typeof instance !== 'string') {
 			console.info('Usage: dploy restart [app]');
@@ -30,6 +32,7 @@ cli
 cli
 	.command('setup')
 	.description('Setup new instance and start it with pm2')
+	.usage('')
 	.action(function () {
 		cli.prompt({
 			name: 'name: ',
@@ -61,6 +64,7 @@ cli
 cli
 	.command('list')
 	.description('List available instances')
+	.usage('')
 	.action(function () {
 		return deployer.list();
 	});
@@ -68,11 +72,13 @@ cli
 cli
 	.command('remove')
 	.description('Delete application folder and config entry')
+	.usage('[app]')
 	.action(function (instance) {
 		if (typeof instance !== 'string') {
 			console.info('Usage: dploy remove [app]');
 			process.exit(0);
 		}
+
 		cli.prompt({
 			val: 'Are you sure you want to delete ['+instance+']? (y/N) '
 		}, function (obj) {
@@ -81,6 +87,27 @@ cli
 			}
 			return process.exit(0);
 		});
+	});
+
+cli
+	.command('set')
+	.description('Change configuration properties')
+	.usage('[app] [property:value]')
+	.action(function (instance, pair) {
+		if (typeof instance !== 'string' || typeof pair !== 'string') {
+			console.info('Usage: dploy set [app] [prop:value]');
+			process.exit(0);
+		}
+
+		var pairs = pair.split(':');
+		var prop = pairs[0];
+		var value = pairs[1];
+		if (prop && value) {
+			return deployer.set(instance, prop, value);
+		} else {
+			console.info('Usage: dploy set [app] [prop:value]');
+			process.exit(0);
+		}
 	});
 
 cli.parse(process.argv);
