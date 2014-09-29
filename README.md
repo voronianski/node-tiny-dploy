@@ -18,7 +18,7 @@ Just use one configuration file and several commands with `dploy`.
 ## Install
 
 ```bash
-npm install tiny-dploy --save
+npm install tiny-dploy -g
 ```
 
 ## Commands
