@@ -13,7 +13,8 @@ if (fs.existsSync(homedir('.dploy_config.json'))) {
 	exit(1);
 }
 
-function _sync () {
+function _sync (opts) {
+	// pull branch
 	echo('-----> git pull');
 	var pull = exec('git pull');
 	if (pull.code !== 0) {
@@ -21,6 +22,7 @@ function _sync () {
 		exit(1);
 	}
 
+	// npm
 	echo('-----> npm install');
 	var install = exec('npm install');
 	if (install.code !== 0) {
@@ -28,18 +30,31 @@ function _sync () {
 		exit(1);
 	}
 
-	echo('-----> bower install');
-	var bower = exec('bower install');
-	if (bower.code !== 0) {
-		echo('Error: Bower install failed');
-		exit(1);
+	// bower
+	if (opts.bower) {
+		echo('-----> bower install');
+		var bower = exec('bower install');
+		if (bower.code !== 0) {
+			echo('Error: Bower install failed');
+			exit(1);
+		}
 	}
 
-	echo('-----> grunt build');
-	var grunt = exec('grunt build');
-	if (grunt.code !== 0) {
-		echo('Error: Grunt build failed');
-		exit(1);
+	// gulp or grunt
+	if (opts.build === 'gulp') {
+		echo('-----> gulp build');
+		var gulp = exec('gulp build');
+		if (gulp.code !== 0) {
+			echo('Error: Gulp build failed');
+			exit(1);
+		}
+	} else if (opts.build === 'gulp') {
+		echo('-----> grunt build');
+		var grunt = exec('grunt build');
+		if (grunt.code !== 0) {
+			echo('Error: Grunt build failed');
+			exit(1);
+		}
 	}
 }
 
@@ -54,7 +69,7 @@ exports.reload = function (name) {
 	echo('-----> cd /var/www/'+folder);
 	cd('/var/www/'+folder);
 
-	_sync(name);
+	_sync(instance);
 
 	var proc = instance.pm2 || folder || name;
 	echo('-----> pm2 reload '+proc);
@@ -83,7 +98,7 @@ exports.restart = function (name) {
 	echo('-----> cd /var/www/'+folder);
 	cd('/var/www/'+folder);
 
-	_sync(name);
+	_sync(instance);
 
 	var cmd = [
 		'pm2 start /var/www/'+folder+'/'+instance.node,
@@ -144,7 +159,7 @@ exports.create = function (cfg) {
 
 		cd('/var/www/'+folder);
 
-		_sync(name);
+		_sync(instance);
 
 		var cmd = [
 			'pm2 start /var/www/'+folder+'/'+instance.node,
@@ -216,4 +231,18 @@ exports.set = function (name, prop, value) {
 		echo('Error: There is no such instance ['+name+'] in config');
 		exit(1);
 	}
+
+	echo('-----> Set "'+prop+'" = "'+value+'"');
+	instance[prop] = value;
+	str = JSON.stringify(config, null, 2);
+
+	fs.writeFile(homedir('.dploy_config.json'), str, function (err) {
+		if (err) {
+			echo(err);
+			exit(1);
+		}
+
+		echo('-----> Success! Instance ['+name+'] is updated');
+		exit(0);
+	});
 };
