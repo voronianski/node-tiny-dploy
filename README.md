@@ -117,14 +117,14 @@ All configuration options are stored inside `.dploy_config.json` file which is l
       "pm2": "test-app",
       "pm2 opts": "-i 4",
       "build": "grunt",
-      "bower": true,
+      "bower": "true",
       "node_env": "staging",
       "port": "8081"
    }
 }
 ```
 
-You're free to make changes inside in order to update necessary application but it's recommended to use [`dploy set`]() instead.
+You're free to make changes inside in order to update necessary application but it's recommended to use [`dploy set`](https://github.com/voronianski/node-tiny-dploy#dploy-set-app-propvalue) instead.
 
 ## To Do
 
