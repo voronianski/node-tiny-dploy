@@ -106,6 +106,7 @@ exports.restart = function (name) {
 		proc,
 		'-f'
 	];
+	instance.env = instance.env || instance.node_env;
 	if (instance.env) {
 		cmd.unshift('NODE_ENV='+instance.env);
 	}
@@ -167,6 +168,8 @@ exports.create = function (cfg) {
 			proc,
 			'-f'
 		];
+
+		instance.env = instance.env || instance.node_env;
 		if (instance.env) {
 			cmd.unshift('NODE_ENV='+instance.env);
 		}
