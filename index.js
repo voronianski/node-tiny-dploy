@@ -48,7 +48,7 @@ function _sync (opts) {
 			echo('Error: Gulp build failed');
 			exit(1);
 		}
-	} else if (opts.build === 'gulp' || !opts.build) {
+	} else if (opts.build === 'grunt' || !opts.build) {
 		echo('-----> grunt build');
 		var grunt = exec('grunt build');
 		if (grunt.code !== 0) {

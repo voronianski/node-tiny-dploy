@@ -134,6 +134,8 @@ You're free to make changes inside in order to update necessary application but 
 
 - [x] Command for editing app options `dploy set [app] branch:production`.
 
+- [ ] Notification about module update.
+
 - [ ] Add ascii table for list.
 
 ## Projects
