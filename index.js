@@ -31,7 +31,7 @@ function _sync (opts) {
 	}
 
 	// bower
-	if (opts.bower) {
+	if (opts.bower === 'true' || !opts.bower) {
 		echo('-----> bower install');
 		var bower = exec('bower install');
 		if (bower.code !== 0) {
@@ -48,7 +48,7 @@ function _sync (opts) {
 			echo('Error: Gulp build failed');
 			exit(1);
 		}
-	} else if (opts.build === 'gulp') {
+	} else if (opts.build === 'gulp' || !opts.build) {
 		echo('-----> grunt build');
 		var grunt = exec('grunt build');
 		if (grunt.code !== 0) {
