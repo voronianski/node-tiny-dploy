@@ -82,6 +82,18 @@ forms the same actions as `dploy reload` then.
 dploy remove staging
 ```
 
+### ``dploy set [app] [prop:value]``
+
+Change configuration for application. In order to make the change live run `reload` or `restart` then.
+
+```bash
+# change bower field
+dploy set staging bower:true
+
+# reload instance
+dploy reload staging
+```
+
 ## Requirements
 
 You need these tools to be installed on your machine in order to work with `dploy`:
@@ -112,7 +124,7 @@ All configuration options are stored inside `.dploy_config.json` file which is l
 }
 ```
 
-You're free to make changes inside in order to update necessary application. There should be added special commands for that in the future.
+You're free to make changes inside in order to update necessary application but it's recommended to use [`dploy set`]() instead.
 
 ## To Do
 
