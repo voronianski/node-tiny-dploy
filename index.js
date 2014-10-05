@@ -203,7 +203,9 @@ exports.list = function () {
 
 	for (var name in config) {
 		var instance = config[name];
-		table.push([name, instance.pm2, instance.folder]);
+		var folder = instance.folder || name;
+		var proc = instance.pm2 || folder || name;
+		table.push([name, proc, folder]);
 	}
 	echo(table.toString());
 };
