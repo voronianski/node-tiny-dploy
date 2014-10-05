@@ -5,6 +5,8 @@ var pkginfo = require('pkginfo')(module, 'version');
 var fs = require('fs');
 var homedir = require('userhome');
 
+var Table = require('cli-table');
+
 if (fs.existsSync(homedir('.dploy_config.json'))) {
 	var config = require(homedir('.dploy_config.json'));
 } else {
@@ -193,8 +195,17 @@ exports.create = function (cfg) {
 };
 
 exports.list = function () {
-	var instances = Object.keys(config);
-	echo(instances.join('\n'));
+	var table = new Table({
+		head: ['Name', 'PM2', '/var/www/'],
+		colWidths: [20, 30, 30],
+		style : {compact: true}
+	});
+
+	for (var name in config) {
+		var instance = config[name];
+		table.push([name, instance.pm2, instance.folder]);
+	}
+	echo(table.toString());
 };
 
 exports.remove = function (name) {

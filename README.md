@@ -136,7 +136,7 @@ You're free to make changes inside in order to update necessary application but 
 
 - [ ] Notification about module update.
 
-- [ ] Add ascii table for list.
+- [x] Add ascii table for list.
 
 ## Projects
 

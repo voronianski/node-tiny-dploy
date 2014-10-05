@@ -1,6 +1,6 @@
 {
   "name": "tiny-dploy",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Simple shell script + PM2 deployer",
   "main": "index.js",
   "keywords": [
@@ -21,6 +21,7 @@
   "author": "Dmitri Voronianski <dmitri.voronianski@gmail.com>",
   "license": "BSD",
   "dependencies": {
+    "cli-table": "^0.3.0",
     "commander": "1.3.2",
     "pkginfo": "^0.3.0",
     "shelljs": "^0.3.0",
