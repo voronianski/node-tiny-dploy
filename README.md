@@ -53,8 +53,12 @@ Lists instances created with `dploy setup`.
 
 ```bash
 user@server:~$ dploy list
-staging
-production
+┌────────────────────┬──────────────────────────────┬──────────────────────────────┐
+│ Name               │ PM2                          │ /var/www/                    │
+├────────────────────┼──────────────────────────────┼──────────────────────────────┤
+│ staging            │ test-app                     │ test-app-dir                 │
+│ production         │ app                          │ app-dir                      │
+└────────────────────┴──────────────────────────────┴──────────────────────────────┘
 ```
 
 ### ``dploy reload [app]``
