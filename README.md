@@ -130,18 +130,6 @@ All configuration options are stored inside `.dploy_config.json` file which is l
 
 You're free to make changes inside in order to update necessary application but it's recommended to use [`dploy set`](https://github.com/voronianski/node-tiny-dploy#dploy-set-app-propvalue) instead.
 
-## To Do
-
-- [x] Support for [gulp](http://gulpjs.com).
-
-- [x] Command `dploy remove [app]` for removing apps from config and all necessary data.
-
-- [x] Command for editing app options `dploy set [app] branch:production`.
-
-- [ ] Notification about module update.
-
-- [x] Add ascii table for list.
-
 ## Projects
 
 List of the projects using this small and helpful hack :sunglasses: :
