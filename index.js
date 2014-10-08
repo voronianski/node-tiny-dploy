@@ -234,8 +234,8 @@ exports.remove = function (name) {
 		echo('-----> cd /var/www/');
 		cd('/var/www/');
 
-		echo('-----> rm -rf /var/www/'+folder+'/*');
-		rm('-rf', '/var/www/'+folder+'/*');
+		echo('-----> rm -rf /var/www/'+folder+'/');
+		rm('-rf', '/var/www/'+folder+'/');
 
 		exit(0);
 	});
