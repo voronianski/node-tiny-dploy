@@ -59,7 +59,8 @@ cli
 			cfg.node = cfg.node || 'app.js';
 			cfg.branch = cfg.branch || 'master';
 			cfg.build = cfg.build === 'gulp' ? 'gulp' : (cfg.build === 'grunt' ? 'grunt' : false);
-			cfg.bower = (cfg.bower === 'Y' || cfg.bower === 'y' || cfg.bower === '' || cfg.bower === 'true') ? 'true' : false;
+			cfg.bower = (cfg.bower === 'Y' || cfg.bower === 'y' || cfg.bower === '' || cfg.bower === 'true') ? true : false;
+			cfg.port = cfg.port || '80';
 
 			return deployer.create(cfg);
 		});
