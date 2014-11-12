@@ -1,6 +1,6 @@
 {
   "name": "tiny-dploy",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "description": "Simple shell script + PM2 deployer",
   "main": "index.js",
   "keywords": [
