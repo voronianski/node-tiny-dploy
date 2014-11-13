@@ -33,7 +33,7 @@ function _sync (opts) {
 	}
 
 	// bower
-	if (opts.bower) {
+	if (opts.bower === 'true' || opts.bower === true) {
 		echo('-----> bower install');
 		var bower = exec('bower install');
 		if (bower.code !== 0) {
