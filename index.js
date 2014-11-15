@@ -60,6 +60,27 @@ function _sync (opts) {
 	}
 }
 
+function _coerce (value) {
+	if (value.trim && value.trim() === '') {
+		return value;
+	}
+
+	var num = Number(value);
+	if (!isNaN(value)) {
+		return num;
+	}
+
+	var _value = value.toLowerCase();
+	if (_value === 'true') {
+		return true;
+	}
+	if (_value === 'false') {
+		return false;
+	}
+
+	return value;
+}
+
 exports.reload = function (name) {
 	var instance = config[name];
 	if (!instance) {
@@ -247,6 +268,8 @@ exports.set = function (name, prop, value) {
 		echo('Error: There is no such instance ['+name+'] in config');
 		exit(1);
 	}
+
+	value = _coerce(value);
 
 	echo('-----> Set "'+prop+'" = "'+value+'"');
 	instance[prop] = value;
