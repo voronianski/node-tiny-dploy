@@ -58,8 +58,9 @@ function _sync (opts) {
 			exit(1);
 		}
 	} else if (opts.build === 'npm') {
-		echo('-----> NODE_ENV='+opts.env+' npm run build');
-		var npm = exec('NODE_ENV='+opts.env+' npm run build');
+		var env = opts.env || opts.node_env;
+		echo('-----> NODE_ENV='+env+' npm run build');
+		var npm = exec('NODE_ENV='+env+' npm run build');
 		if (npm.code !== 0) {
 			echo('Error: npm build failed');
 			exit(1);
