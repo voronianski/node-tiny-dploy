@@ -42,7 +42,7 @@ function _sync (opts) {
 		}
 	}
 
-	// gulp or grunt
+	// gulp or grunt or npm
 	if (opts.build === 'gulp') {
 		echo('-----> gulp build');
 		var gulp = exec('gulp build');
@@ -55,6 +55,13 @@ function _sync (opts) {
 		var grunt = exec('grunt build');
 		if (grunt.code !== 0) {
 			echo('Error: Grunt build failed');
+			exit(1);
+		}
+	} else if (opts.build === 'npm') {
+		echo('-----> NODE_ENV='+opts.env+' npm run build');
+		var npm = exec('NODE_ENV='+opts.env+' npm run build');
+		if (npm.code !== 0) {
+			echo('Error: npm build failed');
 			exit(1);
 		}
 	}

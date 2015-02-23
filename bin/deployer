@@ -42,7 +42,7 @@ cli
 			folder: 'folder in /var/www/ : ',
 			pm2: 'pm2 process: ',
 			opts: 'pm2 opts: ',
-			build: 'build tool (grunt/gulp/N) ',
+			build: 'build tool (grunt/gulp/npm/N) ',
 			bower: 'use bower? (Y/n) ',
 			node_env: 'NODE_ENV (development): ',
 			port: 'NODE_PORT (80): '
@@ -58,7 +58,7 @@ cli
 
 			cfg.node = cfg.node || 'app.js';
 			cfg.branch = cfg.branch || 'master';
-			cfg.build = cfg.build === 'gulp' ? 'gulp' : (cfg.build === 'grunt' ? 'grunt' : false);
+			cfg.build = cfg.build === 'gulp' ? 'gulp' : (cfg.build === 'grunt' ? 'grunt' : (cfg.build === 'npm' ? 'npm' : false));
 			cfg.bower = (cfg.bower === 'Y' || cfg.bower === 'y' || cfg.bower === '' || cfg.bower === 'true') ? true : false;
 			cfg.port = cfg.port || '80';
 

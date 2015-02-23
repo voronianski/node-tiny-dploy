@@ -38,7 +38,7 @@ node (app.js): app.coffee # defaults to `app.js`
 folder in /var/www/ : test-app-dir # will look at `name` if not specified
 pm2 process: test-app # will look at folder or `name` if not specified
 pm2 opts: -i 4 # pm2 options
-build tool (grunt/gulp/N): grunt
+build tool (grunt/gulp/npm/N): grunt
 use bower? (Y/n): Y
 NODE_ENV (development): staging
 NODE_PORT (80): 8081
