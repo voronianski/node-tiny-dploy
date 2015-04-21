@@ -6,113 +6,113 @@ var deployer = require('../');
 cli.version(deployer.version);
 
 cli
-	.command('reload')
-	.description('Reload instance silently without shooting off')
-	.usage('[app]')
-	.action(function (instance) {
-		if (typeof instance !== 'string') {
-			console.info('Usage: dploy reload [app]');
-			process.exit(0);
-		}
-		return deployer.reload(instance);
-	});
+    .command('reload')
+    .description('Reload instance silently without shooting off')
+    .usage('[app]')
+    .action(function (instance) {
+        if (typeof instance !== 'string') {
+            console.info('Usage: dploy reload [app]');
+            process.exit(0);
+        }
+        return deployer.reload(instance);
+    });
 
 cli
-	.command('restart')
-	.description('Force pm2 stopping/restarting an instance')
-	.usage('[app]')
-	.action(function (instance) {
-		if (typeof instance !== 'string') {
-			console.info('Usage: dploy restart [app]');
-			process.exit(0);
-		}
-		return deployer.restart(instance);
-	});
+    .command('restart')
+    .description('Force pm2 stopping/restarting an instance')
+    .usage('[app]')
+    .action(function (instance) {
+        if (typeof instance !== 'string') {
+            console.info('Usage: dploy restart [app]');
+            process.exit(0);
+        }
+        return deployer.restart(instance);
+    });
 
 cli
-	.command('setup')
-	.description('Setup new instance and start it with pm2')
-	.usage('')
-	.action(function () {
-		cli.prompt({
-			name: 'name: ',
-			git: 'git url: ',
-			branch: 'git branch (master): ',
-			node: 'node (app.js): ',
-			folder: 'folder in /var/www/ : ',
-			pm2: 'pm2 process: ',
-			opts: 'pm2 opts: ',
-			build: 'build tool (grunt/gulp/npm/N) ',
-			bower: 'use bower? (Y/n) ',
-			node_env: 'NODE_ENV (development): ',
-			port: 'NODE_PORT (80): '
-		}, function (cfg) {
-			if (!cfg.name) {
-				console.error('Error: Instance name is required');
-				return process.exit(1);
-			}
-			if (!cfg.git) {
-				console.error('Error: git repository url is required');
-				return process.exit(1);
-			}
+    .command('setup')
+    .description('Setup new instance and start it with pm2')
+    .usage('')
+    .action(function () {
+        cli.prompt({
+            name: 'name: ',
+            git: 'git url: ',
+            branch: 'git branch (master): ',
+            node: 'node (app.js): ',
+            folder: 'folder in /var/www/ : ',
+            pm2: 'pm2 process: ',
+            opts: 'pm2 opts: ',
+            build: 'build tool (grunt/gulp/npm/N) ',
+            bower: 'use bower? (Y/n) ',
+            node_env: 'NODE_ENV (development): ',
+            port: 'NODE_PORT (80): '
+        }, function (cfg) {
+            if (!cfg.name) {
+                console.error('Error: Instance name is required');
+                return process.exit(1);
+            }
+            if (!cfg.git) {
+                console.error('Error: git repository url is required');
+                return process.exit(1);
+            }
 
-			cfg.node = cfg.node || 'app.js';
-			cfg.branch = cfg.branch || 'master';
-			cfg.build = cfg.build === 'gulp' ? 'gulp' : (cfg.build === 'grunt' ? 'grunt' : (cfg.build === 'npm' ? 'npm' : false));
-			cfg.bower = (cfg.bower === 'Y' || cfg.bower === 'y' || cfg.bower === '' || cfg.bower === 'true') ? true : false;
-			cfg.port = cfg.port || '80';
+            cfg.node = cfg.node || 'app.js';
+            cfg.branch = cfg.branch || 'master';
+            cfg.build = cfg.build === 'gulp' ? 'gulp' : (cfg.build === 'grunt' ? 'grunt' : (cfg.build === 'npm' ? 'npm' : false));
+            cfg.bower = (cfg.bower === 'Y' || cfg.bower === 'y' || cfg.bower === '' || cfg.bower === 'true') ? true : false;
+            cfg.port = cfg.port || '80';
 
-			return deployer.create(cfg);
-		});
-	});
-
-cli
-	.command('list')
-	.description('List available instances')
-	.usage('')
-	.action(function () {
-		return deployer.list();
-	});
+            return deployer.create(cfg);
+        });
+    });
 
 cli
-	.command('remove')
-	.description('Delete application folder and config entry')
-	.usage('[app]')
-	.action(function (instance) {
-		if (typeof instance !== 'string') {
-			console.info('Usage: dploy remove [app]');
-			process.exit(0);
-		}
-
-		cli.prompt({
-			val: 'Are you sure you want to delete ['+instance+']? (y/N) '
-		}, function (obj) {
-			if (obj.val === 'y' || obj.val === 'Y') {
-				return deployer.remove(instance);
-			}
-			return process.exit(0);
-		});
-	});
+    .command('list')
+    .description('List available instances')
+    .usage('')
+    .action(function () {
+        return deployer.list();
+    });
 
 cli
-	.command('set')
-	.description('Change configuration properties')
-	.usage('[app] [property:value]')
-	.action(function (instance, pair) {
-		if (typeof instance !== 'string' || typeof pair !== 'string') {
-			console.info('Usage: dploy set [app] [prop:value]');
-			process.exit(0);
-		}
+    .command('remove')
+    .description('Delete application folder and config entry')
+    .usage('[app]')
+    .action(function (instance) {
+        if (typeof instance !== 'string') {
+            console.info('Usage: dploy remove [app]');
+            process.exit(0);
+        }
 
-		var pairs = pair.split(':');
-		var prop = pairs[0];
-		var value = pairs[1];
-		if (prop && value) {
-			return deployer.set(instance, prop, value);
-		} else {
-			console.info('Usage: dploy set [app] [prop:value]');
-			process.exit(0);
-		}
-	});
+        cli.prompt({
+            val: 'Are you sure you want to delete ['+instance+']? (y/N) '
+        }, function (obj) {
+            if (obj.val === 'y' || obj.val === 'Y') {
+                return deployer.remove(instance);
+            }
+            return process.exit(0);
+        });
+    });
+
+cli
+    .command('set')
+    .description('Change configuration properties')
+    .usage('[app] [property:value]')
+    .action(function (instance, pair) {
+        if (typeof instance !== 'string' || typeof pair !== 'string') {
+            console.info('Usage: dploy set [app] [prop:value]');
+            process.exit(0);
+        }
+
+        var pairs = pair.split(':');
+        var prop = pairs[0];
+        var value = pairs[1];
+        if (prop && value) {
+            return deployer.set(instance, prop, value);
+        } else {
+            console.info('Usage: dploy set [app] [prop:value]');
+            process.exit(0);
+        }
+    });
 
 cli.parse(process.argv);
