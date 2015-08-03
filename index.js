@@ -7,7 +7,7 @@ var homedir = require('userhome');
 var Table = require('cli-table');
 
 var config;
-function _checkConfig () {
+function _checkConfig (skipExit) {
     if (config) {
         return;
     }
@@ -16,9 +16,11 @@ function _checkConfig () {
     if (fs.existsSync(configFile)) {
         config = require(configFile);
     } else {
-        echo('Error: Please create `.dploy_config.json` file in HOME_DIR');
-        echo('Error: Or run `dploy setup` to create first instance');
-        exit(1);
+        if (!skipExit) {
+            echo('Error: Please create `.dploy_config.json` file in HOME_DIR');
+            echo('Error: Or run `dploy setup` to create first instance');
+            exit(1);
+        }
     }
 }
 
@@ -171,10 +173,13 @@ exports.restart = function (name) {
 };
 
 exports.create = function (cfg) {
-    _checkConfig();
+    _checkConfig(true);
 
     var name = cfg.name;
 
+    if (!config) {
+        config = {};
+    }
     config[name] = cfg;
     delete config[name].name;
     var str = JSON.stringify(config, null, 2);
