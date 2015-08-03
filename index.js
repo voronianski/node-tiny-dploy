@@ -66,8 +66,8 @@ function _sync (opts) {
         }
     } else if (opts.build === 'npm') {
         var env = opts.env || opts.node_env;
-        echo('-----> NODE_ENV='+env+' npm run build');
-        var npm = exec('NODE_ENV='+env+' npm run build');
+        echo('-----> NODE_ENV=' + env + ' npm run build');
+        var npm = exec('NODE_ENV=' + env + ' npm run build');
         if (npm.code !== 0) {
             echo('Error: npm build failed');
             exit(1);
@@ -101,24 +101,24 @@ exports.reload = function (name) {
 
     var instance = config[name];
     if (!instance) {
-        echo('Error: There is no such instance ['+name+'] in config');
+        echo('Error: There is no such instance [' + name + '] in config');
         exit(1);
     }
 
     var folder = instance.folder || name;
-    echo('-----> cd /var/www/'+folder);
-    cd('/var/www/'+folder);
+    echo('-----> cd /var/www/' + folder);
+    cd('/var/www/' + folder);
 
     _sync(instance);
 
     var proc = instance.pm2 || folder || name;
-    echo('-----> pm2 reload '+proc);
-    var pm2 = exec('pm2 reload '+proc);
+    echo('-----> pm2 reload ' + proc);
+    var pm2 = exec('pm2 reload ' + proc);
     if (pm2.code !== 0) {
         echo('Error: PM2 reload failed');
         exit(1);
     }
-    echo('-----> Success! Instance ['+name+'] was realoded via pm2');
+    echo('-----> Success! Instance [' + name + '] was realoded via pm2');
     exit(0);
 };
 
@@ -127,33 +127,33 @@ exports.restart = function (name) {
 
     var instance = config[name];
     if (!instance) {
-        echo('Error: There is no such instance ['+name+'] in config');
+        echo('Error: There is no such instance [' + name + '] in config');
         exit(1);
     }
 
     var folder = instance.folder || name;
     var proc = instance.pm2 || folder || name;
 
-    echo('-----> pm2 stop '+proc);
-    exec('pm2 stop '+proc);
+    echo('-----> pm2 stop ' + proc);
+    exec('pm2 stop ' + proc);
 
-    echo('-----> cd /var/www/'+folder);
-    cd('/var/www/'+folder);
+    echo('-----> cd /var/www/' + folder);
+    cd('/var/www/' + folder);
 
     _sync(instance);
 
     var cmd = [
-        'pm2 start /var/www/'+folder+'/'+instance.node,
+        'pm2 start /var/www/' + folder + '/' + instance.node,
         '--name',
         proc,
         '-f'
     ];
     instance.env = instance.env || instance.node_env;
     if (instance.env) {
-        cmd.unshift('NODE_ENV='+instance.env);
+        cmd.unshift('NODE_ENV=' + instance.env);
     }
     if (instance.port) {
-        cmd.unshift('NODE_PORT='+instance.port);
+        cmd.unshift('NODE_PORT=' + instance.port);
     }
     if (instance.opts) {
         cmd.push(instance.opts);
@@ -166,7 +166,7 @@ exports.restart = function (name) {
         echo('Error: PM2 start failed');
         exit(1);
     }
-    echo('-----> Success! Instance ['+name+'] was restarted via pm2');
+    echo('-----> Success! Instance [' + name + '] was restarted via pm2');
     exit(0);
 };
 
@@ -177,7 +177,7 @@ exports.create = function (cfg) {
 
     config[name] = cfg;
     delete config[name].name;
-    str = JSON.stringify(config, null, 2);
+    var str = JSON.stringify(config, null, 2);
 
     fs.writeFile(homedir('.dploy_config.json'), str, function (err) {
         if (err) {
@@ -191,23 +191,23 @@ exports.create = function (cfg) {
 
         cd('/var/www');
 
-        echo('-----> Clone git repo into folder with name "'+folder+'"');
-        var gitStr = 'git clone '+instance.git+' --branch '+instance.branch+' '+folder;
-        echo('-----> '+gitStr);
+        echo('-----> Clone git repo into folder with name "' + folder + '"');
+        var gitStr = 'git clone ' + instance.git + ' --branch ' + instance.branch + ' ' + folder;
+        echo('-----> ' + gitStr);
         var git = exec(gitStr);
         if (git.code !== 0) {
             echo('Error: Git clone failed');
             exit(1);
         }
 
-        exec('sudo chown -R $USER '+folder);
+        exec('sudo chown -R $USER ' + folder);
 
-        cd('/var/www/'+folder);
+        cd('/var/www/' + folder);
 
         _sync(instance);
 
         var cmd = [
-            'pm2 start /var/www/'+folder+'/'+instance.node,
+            'pm2 start /var/www/' + folder + '/' + instance.node,
             '--name',
             proc,
             '-f'
@@ -215,10 +215,10 @@ exports.create = function (cfg) {
 
         instance.env = instance.env || instance.node_env;
         if (instance.env) {
-            cmd.unshift('NODE_ENV='+instance.env);
+            cmd.unshift('NODE_ENV=' + instance.env);
         }
         if (instance.port) {
-            cmd.unshift('NODE_PORT='+instance.port);
+            cmd.unshift('NODE_PORT=' + instance.port);
         }
         if (instance.opts) {
             cmd.push(instance.opts);
@@ -231,7 +231,7 @@ exports.create = function (cfg) {
             echo('Error: PM2 start failed');
             exit(1);
         }
-        echo('-----> Success! Instance ['+name+'] is running via pm2');
+        echo('-----> Success! Instance [' + name + '] is running via pm2');
         exit(0);
     });
 };
@@ -242,7 +242,7 @@ exports.list = function () {
     var table = new Table({
         head: ['Name', 'PM2', '/var/www/'],
         colWidths: [20, 30, 30],
-        style : {compact: true}
+        style: {compact: true}
     });
 
     for (var name in config) {
@@ -259,17 +259,17 @@ exports.remove = function (name) {
 
     var instance = config[name];
     if (!instance) {
-        echo('Error: There is no such instance ['+name+'] in config');
+        echo('Error: There is no such instance [' + name + '] in config');
         exit(1);
     }
     var folder = instance.folder || name;
     var proc = instance.pm2 || folder || name;
 
-    echo('-----> pm2 delete '+proc);
-    exec('pm2 delete '+proc);
+    echo('-----> pm2 delete ' + proc);
+    exec('pm2 delete ' + proc);
 
     delete config[name];
-    str = JSON.stringify(config, null, 2);
+    var str = JSON.stringify(config, null, 2);
 
     fs.writeFile(homedir('.dploy_config.json'), str, function (err) {
         if (err) {
@@ -280,8 +280,8 @@ exports.remove = function (name) {
         echo('-----> cd /var/www/');
         cd('/var/www/');
 
-        echo('-----> rm -rf /var/www/'+folder+'/');
-        rm('-rf', '/var/www/'+folder+'/');
+        echo('-----> rm -rf /var/www/' + folder + '/');
+        rm('-rf', '/var/www/' + folder + '/');
 
         exit(0);
     });
@@ -292,15 +292,15 @@ exports.set = function (name, prop, value) {
 
     var instance = config[name];
     if (!instance) {
-        echo('Error: There is no such instance ['+name+'] in config');
+        echo('Error: There is no such instance [' + name + '] in config');
         exit(1);
     }
 
     value = _coerce(value);
 
-    echo('-----> Set "'+prop+'" = "'+value+'"');
+    echo('-----> Set "' + prop + '" = "' + value + '"');
     instance[prop] = value;
-    str = JSON.stringify(config, null, 2);
+    var str = JSON.stringify(config, null, 2);
 
     fs.writeFile(homedir('.dploy_config.json'), str, function (err) {
         if (err) {
@@ -308,7 +308,7 @@ exports.set = function (name, prop, value) {
             exit(1);
         }
 
-        echo('-----> Success! Instance ['+name+'] is updated');
+        echo('-----> Success! Instance [' + name + '] is updated');
         exit(0);
     });
 };
